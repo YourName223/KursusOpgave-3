@@ -1,5 +1,5 @@
 package model;
 
-public class Deposit
+public interface Deposit
 {
 }
