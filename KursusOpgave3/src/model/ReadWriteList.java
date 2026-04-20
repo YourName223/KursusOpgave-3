@@ -1,5 +1,6 @@
 package model;
 
-public interface ReadWriteList
+public interface ReadWriteList extends ReadList
 {
+  void write(Valuable valuable);
 }
