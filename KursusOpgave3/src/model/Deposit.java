@@ -7,4 +7,5 @@ public interface Deposit
   public Valuable take();
 
   public int size();
+  boolean isEmpty();
 }

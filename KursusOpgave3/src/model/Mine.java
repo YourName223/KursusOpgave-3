@@ -30,6 +30,7 @@ public class Mine
       Thread.currentThread().interrupt();
     }
 
+    Log.getInstance().addLog("Mined valuable from mine");
     return valuableList.remove(valuableList.size() - 1);
   }
 }

@@ -70,4 +70,9 @@ public class Valuable
   {
     return value;
   }
+
+  public String toString()
+  {
+    return "Type: " + type + " Value: " + value;
+  }
 }

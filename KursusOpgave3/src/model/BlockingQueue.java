@@ -28,6 +28,7 @@ public class BlockingQueue implements Deposit
     {
       Thread.currentThread().interrupt();
     }
+    Log.getInstance().addLog("Added : " + element + " in deposit");
     list.add(element);
   }
 
@@ -44,12 +45,17 @@ public class BlockingQueue implements Deposit
 
     Random rand = new Random();
     int randomValuable = rand.nextInt(list.size());
-
+    Log.getInstance().addLog("Removed a valuable from deposit");
     return list.get(randomValuable);
   }
 
   @Override public int size()
   {
     return list.size();
+  }
+
+  @Override public boolean isEmpty()
+  {
+    return list.isEmpty();
   }
 }

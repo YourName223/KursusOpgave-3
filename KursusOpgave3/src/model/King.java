@@ -32,7 +32,7 @@ public class King implements Runnable
 
   private void planFest()
   {
-    int random = (int)(Math.random() * 100 + 50);
+    int random = (int)(Math.random() * 300 + 50);
 
     collectFromTreasureRoom(random);
   }

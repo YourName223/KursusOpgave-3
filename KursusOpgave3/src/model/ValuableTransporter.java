@@ -43,8 +43,20 @@ public class ValuableTransporter implements Runnable
     int valuableListValue = 0;
     while (valuableListValue < random)
     {
-      valuableList.add(deposit.take());
-      valuableListValue += valuableList.getFirst().getValue();
+      if(!deposit.isEmpty())
+      {
+        valuableList.add(deposit.take());
+        valuableListValue += valuableList.getLast().getValue();
+      }
+      else
+      {
+        try {
+          Thread.sleep(50); // avoid busy spin
+        } catch (InterruptedException e) {
+          Thread.currentThread().interrupt();
+          return;
+        }
+      }
     }
   }
 
@@ -54,6 +66,7 @@ public class ValuableTransporter implements Runnable
 
     for(Valuable valuable : valuableList)
     {
+      Log.getInstance().addLog("Added : " + valuable + " in treasure room");
       readWriteList.add(valuable);
     }
 
