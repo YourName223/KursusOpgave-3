@@ -9,7 +9,6 @@ public class King implements Runnable
 
   public King(Door lock)
   {
-    valuableList = new ArrayList<>();
     this.lock = lock;
   }
 
@@ -40,35 +39,34 @@ public class King implements Runnable
 
   private void collectFromTreasureRoom(int random)
   {
+    valuableList = new ArrayList<>();
+
     ReadWriteList readWriteList = lock.acquireWrite();
 
     ArrayList<Valuable> treasureRoomList = readWriteList.read();
 
     int totalValue = 0;
 
-    while (totalValue < random)
+    while (totalValue < random && !treasureRoomList.isEmpty())
     {
-      if (treasureRoomList == null)
-      {
-        if (!valuableList.isEmpty())
-        {
-          for (Valuable valuable1 : valuableList)
-          {
-            readWriteList.add(valuable1);
-            valuableList.clear();
-          }
-        }
-
-        lock.releaseWrite();
-        break;
-      }
-
-      Valuable valuable = treasureRoomList.getFirst();
+      Valuable valuable = treasureRoomList.removeFirst();
 
       valuableList.add(valuable);
-      treasureRoomList.remove(valuable);
       totalValue += valuable.getValue();
     }
+
+    if(totalValue >= random)
+    {
+      Log.getInstance().addLog("LETS GO PARTY!");
+    }
+    else
+    {
+      for (Valuable v : valuableList)
+      {
+        readWriteList.add(v);
+      }
+    }
+
     valuableList.clear();
     lock.releaseWrite();
   }
