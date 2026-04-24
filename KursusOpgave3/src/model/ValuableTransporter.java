@@ -21,6 +21,7 @@ public class ValuableTransporter implements Runnable
     while (true)
     {
       collectFromDeposit();
+      deliverToTreasureRoom();
 
       valuableList.clear();
 
