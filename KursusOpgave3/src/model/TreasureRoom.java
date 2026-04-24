@@ -40,7 +40,12 @@ public class TreasureRoom implements ReadWriteList
     try { Thread.sleep(secondsToWrite * 1000L); }
     catch (InterruptedException e) { e.printStackTrace(); }
 
-    list.add(valuable);
+    if(!list.contains(valuable))
+    {
+      throw new IllegalArgumentException("TreasureRoom does not contain that valuable");
+    }
+
+    list.remove(valuable);
     if (list.size() > 10000)
     {
       list.remove(0);
