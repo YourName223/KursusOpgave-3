@@ -1,6 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+
 public interface ReadList
 {
-  Valuable read();
+  public ArrayList<Valuable> read();
 }
