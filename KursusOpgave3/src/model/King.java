@@ -9,6 +9,7 @@ public class King implements Runnable
 
   public King(Door lock)
   {
+    valuableList = new ArrayList<>();
     this.lock = lock;
   }
 
@@ -32,45 +33,43 @@ public class King implements Runnable
 
   private void planFest()
   {
-    collectFromTreasureRoom();
-  }
-
-  private void collectFromTreasureRoom()
-  {
     int random = (int)(Math.random() * 100 + 50);
 
+    collectFromTreasureRoom(random);
+  }
+
+  private void collectFromTreasureRoom(int random)
+  {
     ReadWriteList readWriteList = lock.acquireWrite();
+
+    ArrayList<Valuable> treasureRoomList = readWriteList.read();
 
     int totalValue = 0;
 
-    while (true)
+    while (totalValue < random)
     {
-      Valuable valuable = readWriteList.read();
+      if (treasureRoomList == null)
+      {
+        if (!valuableList.isEmpty())
+        {
+          for (Valuable valuable1 : valuableList)
+          {
+            readWriteList.add(valuable1);
+            valuableList.clear();
+          }
+        }
 
-      if (valuable == null) break;
+        lock.releaseWrite();
+        break;
+      }
+
+      Valuable valuable = treasureRoomList.getFirst();
 
       valuableList.add(valuable);
+      treasureRoomList.remove(valuable);
       totalValue += valuable.getValue();
-
-      try { Thread.sleep(100); }
-      catch (InterruptedException e) { Thread.currentThread().interrupt(); }
     }
-
-    if (totalValue >= random)
-    {
-      // Målet nået - hold fest, smid værdigenstandene væk
-      valuableList.clear();
-    }
-    else
-    {
-      // Ikke nok - læg dem tilbage
-      for (Valuable valuable : valuableList)
-      {
-        readWriteList.write(valuable);
-      }
-      valuableList.clear();
-    }
-
+    valuableList.clear();
     lock.releaseWrite();
   }
 }

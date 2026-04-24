@@ -23,7 +23,19 @@ public class TreasureRoom implements ReadWriteList
     return list;
   }
 
-  public void write(Valuable valuable)
+  public void add(Valuable valuable)
+  {
+    try { Thread.sleep(secondsToWrite * 1000L); }
+    catch (InterruptedException e) { e.printStackTrace(); }
+
+    list.add(valuable);
+    if (list.size() > 10000)
+    {
+      list.remove(0);
+    }
+  }
+
+  public void remove(Valuable valuable)
   {
     try { Thread.sleep(secondsToWrite * 1000L); }
     catch (InterruptedException e) { e.printStackTrace(); }

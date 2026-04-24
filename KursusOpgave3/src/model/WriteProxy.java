@@ -13,21 +13,30 @@ public class WriteProxy implements ReadWriteList
     this.access = access;
   }
 
-  @Override public void write(Valuable valuable)
+  @Override public ArrayList<Valuable> read()
   {
     if(!access.hasWriteAccess(Thread.currentThread()))
     {
       throw new SecurityException("No read access");
     }
-    list.write(valuable);
+    return list.read();
   }
 
-  @Override public ArrayList<Valuable> read()
+  @Override public void remove(Valuable valuable)
   {
-    if(!access.hasReadAccess(Thread.currentThread()))
+    if(!access.hasWriteAccess(Thread.currentThread()))
     {
       throw new SecurityException("No read access");
     }
-    return list.read();
+    list.remove(valuable);
+  }
+
+  @Override public void add(Valuable valuable)
+  {
+    if(!access.hasWriteAccess(Thread.currentThread()))
+    {
+      throw new SecurityException("No read access");
+    }
+    list.add(valuable);
   }
 }
