@@ -10,7 +10,7 @@ public class Valuable
   private String type;
 
   private static Map<String, Valuable> allInstances = new HashMap<>();
-  private static final Random random = new Random();
+  private static final Random RANDOM = new Random();
 
   private static final String[] TYPES = {"Diamant", "GoldNugget", "Jewel",
       "Ruby", "WoodenCoin"};
@@ -23,12 +23,12 @@ public class Valuable
 
   private static String randomType()
   {
-    return TYPES[random.nextInt(TYPES.length)];
+    return TYPES[RANDOM.nextInt(TYPES.length)];
   }
 
   private static int randomInRange(int min, int max)
   {
-    return random.nextInt((max - min) + 1) + min;
+    return RANDOM.nextInt((max - min) + 1) + min;
   }
 
   private static int valueForType(String type)
