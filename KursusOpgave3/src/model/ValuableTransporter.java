@@ -20,22 +20,20 @@ public class ValuableTransporter implements Runnable
 
     while (true)
     {
-      // Trin 1 & 2: Saml værdigenstande fra deposit indtil total værdi er nået
       collectFromDeposit();
 
-      // Trin 3: Ryd listen
       valuableList.clear();
 
-      // Trin 4: Sov lidt
       try
       {
-        Thread.sleep((long)(Math.random() * 1000 + 500));
+        Thread.sleep((long) (Math.random() * 1000 + 500));
       }
       catch (InterruptedException e)
       {
         Thread.currentThread().interrupt();
         break;
       }
+    }
   }
 
   private void collectFromDeposit()
