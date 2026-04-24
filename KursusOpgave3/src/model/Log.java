@@ -8,7 +8,7 @@ public class Log
 {
 
   private static Log instance;
-  private String logFile = "app.log";
+  private final String logFile = "app.log";
 
   private Log() {}
 

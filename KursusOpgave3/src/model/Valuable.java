@@ -70,9 +70,4 @@ public class Valuable
   {
     return value;
   }
-
-  public String getType()
-  {
-    return type;
-  }
 }

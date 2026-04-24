@@ -19,16 +19,6 @@ public class ValuablesMiner implements Runnable
     {
       mineValuable();
       depositValuable();
-
-      try
-      {
-        Thread.sleep((long)(Math.random() * 500 + 100));
-      }
-      catch (InterruptedException e)
-      {
-        Thread.currentThread().interrupt();
-        break;
-      }
     }
   }
 

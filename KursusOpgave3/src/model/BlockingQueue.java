@@ -20,11 +20,28 @@ public class BlockingQueue implements Deposit
 
   @Override public void put(Valuable element)
   {
-   list.add(element);
+    try
+    {
+      Thread.sleep((long)(Math.random() * 500 + 1000));
+    }
+    catch (InterruptedException e)
+    {
+      Thread.currentThread().interrupt();
+    }
+    list.add(element);
   }
 
   @Override public Valuable take()
   {
+    try
+    {
+      Thread.sleep((long)(Math.random() * 500 + 1000));
+    }
+    catch (InterruptedException e)
+    {
+      Thread.currentThread().interrupt();
+    }
+
     Random rand = new Random();
     int randomValuable = rand.nextInt(list.size());
 

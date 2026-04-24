@@ -8,7 +8,7 @@ public class Mine
 
   public Mine()
   {
-    valuableList = new ArrayList<Valuable>();
+    valuableList = new ArrayList<>();
 
     for (int i = 0; i < 1000; i++) {
       valuableList.add(Valuable.getInstance(String.valueOf(i)));
@@ -20,6 +20,16 @@ public class Mine
     if (valuableList.isEmpty()) {
       throw new IllegalStateException("Mine is empty!");
     }
+
+    try
+    {
+      Thread.sleep((long)(Math.random() * 500 + 1000));
+    }
+    catch (InterruptedException e)
+    {
+      Thread.currentThread().interrupt();
+    }
+
     return valuableList.remove(valuableList.size() - 1);
   }
 }

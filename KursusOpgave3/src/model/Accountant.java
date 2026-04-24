@@ -1,27 +1,3 @@
-/*package model;
-
-public class Accountant implements Runnable
-{
-  private Door lock;
-
-  public Accountant(Door lock)
-  {
-    this.lock = lock;
-  }
-
-  @Override public void run()
-  {
-
-  }
-
-  private void countTreasureRoomValue()
-  {
-    ReadList readList = lock.acquireWrite();
-    Log log = Log.getInstance();
-    log.addLog(readList.toString());
-  }
-}*/
-
 package model;
 
 public class Accountant implements Runnable
@@ -62,7 +38,7 @@ public class Accountant implements Runnable
       totalValue += valuable.getValue();
     }
 
-    Log.getInstance().addLog("Samlet værdi i skattekammeret: " + totalValue);
+    Log.getInstance().addLog("Total value in treasure room: " + totalValue);
 
     lock.releaseRead();
   }

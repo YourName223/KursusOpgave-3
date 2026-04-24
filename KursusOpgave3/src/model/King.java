@@ -37,7 +37,7 @@ public class King implements Runnable
     collectFromTreasureRoom(random);
   }
 
-  private void collectFromTreasureRoom(int random)
+  private void collectFromTreasureRoom(int value)
   {
     valuableList = new ArrayList<>();
 
@@ -47,7 +47,7 @@ public class King implements Runnable
 
     int totalValue = 0;
 
-    while (totalValue < random && !treasureRoomList.isEmpty())
+    while (totalValue < value && !treasureRoomList.isEmpty())
     {
       Valuable valuable = treasureRoomList.removeFirst();
 
@@ -55,7 +55,7 @@ public class King implements Runnable
       totalValue += valuable.getValue();
     }
 
-    if(totalValue >= random)
+    if(totalValue >= value)
     {
       Log.getInstance().addLog("LETS GO PARTY!");
     }
