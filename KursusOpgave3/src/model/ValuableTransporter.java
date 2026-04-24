@@ -54,7 +54,7 @@ public class ValuableTransporter implements Runnable
 
     for(Valuable valuable : valuableList)
     {
-      readWriteList.write(valuable);
+      readWriteList.add(valuable);
     }
 
     lock.releaseWrite();
