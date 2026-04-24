@@ -14,12 +14,16 @@ public class Log
 
   public static Log getInstance() {
     if (instance == null) {
-      instance = new Log();
+      synchronized (Log.class) {
+        if (instance == null) {
+          instance = new Log();
+        }
+      }
     }
     return instance;
   }
 
-  public void addLog(String action) {
+  public synchronized void addLog(String action) {
     String time = LocalDateTime.now().toString();
     String fullMessage = time + " | " + action;
 
