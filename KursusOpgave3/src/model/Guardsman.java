@@ -21,7 +21,7 @@ public class Guardsman implements Door
     this.list = list;
   }
 
-  @Override public ReadList acquireRead()
+  @Override synchronized public ReadList acquireRead()
   {
     while(waitingWriters > 0 || writers > 0)
     {
@@ -35,24 +35,42 @@ public class Guardsman implements Door
       }
     }
     readers++;
-    allowedReadAccess.add();
+    allowedReadAccess.add(Thread.currentThread());
     return new ReadProxy(list, this);
   }
 
-  @Override public void releaseRead()
+  @Override synchronized public void releaseRead()
   {
     readers--;
-    allowedReadAccess.remove();
+    allowedReadAccess.remove(Thread.currentThread());
+    notifyAll();
   }
 
-  @Override public ReadWriteList acquireWrite()
+  @Override synchronized public ReadWriteList acquireWrite()
   {
-
+    waitingWriters ++;
+    while (readers > 0 || writers > 0)
+    {
+      try
+      {
+        wait();
+      }
+      catch (InterruptedException e)
+      {
+        throw new RuntimeException(e);
+      }
+    }
+    waitingWriters--;
+    writers++;
+    allowedWriteAccess.add(Thread.currentThread());
+    return new WriteProxy(list,this);
   }
 
-  @Override public void releaseWrite()
+  @Override synchronized public void releaseWrite()
   {
-
+    writers--;
+    allowedWriteAccess.remove(Thread.currentThread());
+    notifyAll();
   }
 
   public boolean hasReadAccess(Thread t)
