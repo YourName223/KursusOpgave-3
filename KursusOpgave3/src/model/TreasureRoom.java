@@ -15,12 +15,12 @@ public class TreasureRoom implements ReadWriteList
     this.secondsToWrite = secondsToWrite;
   }
 
-  public Valuable read()
+  public ArrayList<Valuable> read()
   {
     try { Thread.sleep(secondsToRead * 1000L); }
     catch (InterruptedException e) { e.printStackTrace(); }
 
-    return list.get(list.size() - 1);
+    return list;
   }
 
   public void write(Valuable valuable)
