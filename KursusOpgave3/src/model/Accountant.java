@@ -57,16 +57,12 @@ public class Accountant implements Runnable
 
     int totalValue = 0;
 
-    for (int i = 0; i < readList.size(); i++)
+    for (Valuable valuable : readList.read())
     {
-      totalValue += readList.get(i).getValue();
-
-      try { Thread.sleep(100); }
-      catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+      totalValue += valuable.getValue();
     }
 
-    Log log = Log.getInstance();
-    log.addLog("Samlet værdi i skattekammeret: " + totalValue);
+    Log.getInstance().addLog("Samlet værdi i skattekammeret: " + totalValue);
 
     lock.releaseRead();
   }
